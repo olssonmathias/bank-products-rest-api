@@ -3,13 +3,12 @@ package controllers
 import (
 	"bank-products-rest-api/data"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 )
 
-func PostProduct(w http.ResponseWriter, r *http.Request) {
+func CreateProduct(w http.ResponseWriter, r *http.Request) {
 	requestBody, error := ioutil.ReadAll(r.Body)
 	if error != nil {
 		log.Fatal(error)
@@ -20,10 +19,11 @@ func PostProduct(w http.ResponseWriter, r *http.Request) {
 
 	for _, existingProduct := range data.ProductData {
 		if existingProduct.ID == newProduct.ID {
-			fmt.Fprintln(w, "Product with ID "+newProduct.ID+" already exists.")
+			w.Header().Set("location", "/product/"+existingProduct.ID)
+			w.WriteHeader(http.StatusConflict)
 			return
 		}
 	}
 	data.ProductData = append(data.ProductData, newProduct)
-	fmt.Fprintln(w, "Added product "+newProduct.ID)
+	w.WriteHeader(http.StatusOK)
 }

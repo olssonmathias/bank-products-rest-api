@@ -3,7 +3,6 @@ package controllers
 import (
 	"bank-products-rest-api/data"
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -20,5 +19,6 @@ func GetProduct(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	fmt.Fprintln(w, "Could not find product "+id)
+	w.Header().Set("location", "/product/"+id)
+	w.WriteHeader(http.StatusNotFound)
 }

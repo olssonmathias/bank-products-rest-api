@@ -1,10 +1,10 @@
 package data
 
 type Product struct {
-	ID   string `json:"id"`
-	Bank string `json:"bank"`
-	Name string `json:"name"`
-	AER  string `json:"aer"`
+	ID   string `json:"id,omitempty"`
+	Bank string `json:"bank,omitempty"`
+	Name string `json:"name,omitempty"`
+	AER  string `json:"aer,omitempty"`
 }
 
 type Products []Product
