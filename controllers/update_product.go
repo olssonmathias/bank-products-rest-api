@@ -3,7 +3,6 @@ package controllers
 import (
 	"bank-products-rest-api/data"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -26,9 +25,10 @@ func UpdateProduct(w http.ResponseWriter, r *http.Request) {
 	for index, product := range data.ProductData {
 		if product.ID == id {
 			data.ProductData[index] = productData
-			fmt.Fprintln(w, "Updated product "+id)
+			w.WriteHeader(http.StatusOK)
 			return
 		}
 	}
-	fmt.Fprintln(w, "Could not find product "+id)
+	w.Header().Set("location", "/product/"+id)
+	w.WriteHeader(http.StatusNotFound)
 }

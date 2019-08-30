@@ -10,15 +10,15 @@ import (
 )
 
 func handleRequests() {
-	myRouter := mux.NewRouter().StrictSlash(true)
+	router := mux.NewRouter().StrictSlash(true)
 
-	myRouter.HandleFunc("/products", controllers.GetAllProducts).Methods("GET")
-	myRouter.HandleFunc("/product/{id}", controllers.GetProduct).Methods("GET")
-	myRouter.HandleFunc("/product/{id}", controllers.DeleteProduct).Methods("DELETE")
-	myRouter.HandleFunc("/product/{id}", controllers.UpdateProduct).Methods("PUT")
-	myRouter.HandleFunc("/product", controllers.PostProduct).Methods("POST")
+	router.HandleFunc("/products", controllers.GetAllProducts).Methods("GET")
+	router.HandleFunc("/product/{id}", controllers.GetProduct).Methods("GET")
+	router.HandleFunc("/product/{id}", controllers.DeleteProduct).Methods("DELETE")
+	router.HandleFunc("/product/{id}", controllers.UpdateProduct).Methods("PUT")
+	router.HandleFunc("/product", controllers.CreateProduct).Methods("POST")
 
-	log.Fatal(http.ListenAndServe(":8081", myRouter))
+	log.Fatal(http.ListenAndServe(":8081", router))
 }
 
 func main() {
